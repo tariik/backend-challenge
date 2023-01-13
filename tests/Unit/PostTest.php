@@ -45,6 +45,7 @@ class PostTest extends TestCase
     public function test_can_create_post()
     {
         $postData = [
+            'id' => $this->faker->randomNumber(),
             'title' => $this->faker->sentence,
             'body' => $this->faker->paragraph,
             'user_id' => $this->faker->randomDigit,

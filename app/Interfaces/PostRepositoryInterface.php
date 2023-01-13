@@ -9,4 +9,6 @@ interface PostRepositoryInterface
     public function deletePost($postId);
     public function createPost(array $postDetails);
     public function updatePost($postId, array $newDetails);
+    public function updatePostBody($postId, array $body);
+    public function getUsersIdsWithPosts();
 }

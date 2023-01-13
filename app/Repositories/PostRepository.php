@@ -36,4 +36,10 @@ class PostRepository implements PostRepositoryInterface
     {
         return  Post::where('id', $postId)->update(['body', $body]);
     }
+
+    public function getUsersIdsWithPosts()
+    {
+        return  Post::select('uesr_id')->distinct()->get();
+    }
+
 }
