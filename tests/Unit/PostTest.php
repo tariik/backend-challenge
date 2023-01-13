@@ -62,4 +62,49 @@ class PostTest extends TestCase
         $this->assertNotNull($post->id);
 
     }
+
+    public function test_can_update_body_or_insert_post()
+    {
+        $id = $this->faker->randomDigit;
+        $title = $this->faker->sentence;
+        $user_id = $this->faker->randomDigit;
+        $rating = $this->faker->randomDigit;
+        $body = $this->faker->paragraph;
+        $bodyModified = $this->faker->paragraph;
+
+        $postData1 = [
+            'id' => $id,
+            'title' => $title,
+            'body' => $body,
+            'user_id' => $user_id ,
+            'rating' => $rating ,
+        ];
+
+        $postData2 = [
+            'id' => $id,
+            'title' => $title,
+            'body' => $bodyModified,
+            'user_id' => $user_id,
+            'rating' => $rating,
+        ];
+
+
+        $this->postRepository->updateBodyOrInsertData($postData1);
+        $post =  $this->postRepository->getPostById($id);
+
+        
+        $this->assertEquals($postData1['title'], $post->title);
+        $this->assertEquals($postData1['body'], $post->body);
+        $this->assertEquals($postData1['user_id'], $post->user_id);
+        $this->assertEquals($postData1['rating'], $post->rating);
+
+        $this->postRepository->updateBodyOrInsertData($postData2);
+        $post =  $this->postRepository->getPostById($id);
+
+        $this->assertNotEquals($postData1['body'], $post->body);
+        $this->assertEquals($postData2['body'], $post->body);
+
+    }
+
+    
 }

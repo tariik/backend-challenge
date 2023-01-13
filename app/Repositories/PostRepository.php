@@ -32,14 +32,38 @@ class PostRepository implements PostRepositoryInterface
         return Post::whereId($postId)->update($newDetails);
     }
 
-    public function updatePostBody($postId, array $body)
-    {
-        return  Post::where('id', $postId)->update(['body', $body]);
-    }
-
     public function getUsersIdsWithPosts()
     {
         return  Post::select('uesr_id')->distinct()->get();
     }
 
+    public function exists($postId)
+    {
+        return  Post::where('id', $postId)->exists();
+    }
+
+    public function updateBodyOrInsertData(array $postDetails)
+    {
+        if ($this->exists($postDetails['id'])) {
+            // update rating here?
+           $this->updatePost
+            (
+                $postDetails['id'], 
+                [
+                    'body' => $postDetails['body'],
+                    'rating' => $postDetails['rating']
+                ]
+            );
+        } else {
+            $this->createPost(
+                [
+                    'id' => $postDetails['id'],
+                    'user_id' => $postDetails['user_id'],
+                    'title' => $postDetails['title'],
+                    'body' => $postDetails['body'],
+                    'rating' => $postDetails['rating']
+                ]
+            );
+        }
+    }
 }
