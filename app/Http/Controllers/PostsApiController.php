@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use App\Interfaces\PostRepositoryInterface;
 use App\Services\ExternalApiClient;
 use App\Services\ProcessService;
+use App\Interfaces\UserRepositoryInterface;
 
 
 class PostsApiController extends Controller
@@ -15,16 +16,19 @@ class PostsApiController extends Controller
     private PostRepositoryInterface $postRepository;
     private ExternalApiClient $externalApiClient;
     private ProcessService $processService;
+    private UserRepositoryInterface $userRepository;
 
     public function __construct(
         PostRepositoryInterface $postRepository,
         ExternalApiClient $externalApiClient,
-        ProcessService $processService
+        ProcessService $processService,
+        UserRepositoryInterface $userRepository
     ) 
     {
         $this->postRepository = $postRepository;
         $this->externalApiClient = $externalApiClient;
         $this->processService = $processService;
+        $this->userRepository = $userRepository;    
     }
 
 
@@ -51,7 +55,6 @@ class PostsApiController extends Controller
         $userIds = $this->processService->getUsersIdWithPosts($apiPosts);
 
         foreach ($apiUsers as $apiUser) {
-            
             if (in_array($apiUser['id'], $userIds)) {
                 $user = [
                     'id' => $apiUser['id'],
@@ -60,12 +63,14 @@ class PostsApiController extends Controller
                     'city' => $apiUser['address']['city'],
                 ]; 
 
-                dd($user);
-                $userIds[] = $user['id'];
+                $this->userRepository->insertIfNotExist($user);
             }
         }
+
+        $users = $this->userRepository->getAllUsers();
+
         return response()->json([
-            'data' => $posts,
+            'data' => $users,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
