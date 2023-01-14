@@ -2,41 +2,49 @@
 
 namespace App\Services;
 
-use App\Interfaces\PostRepositoryInterface;
 use App\Services\UtilsService;
 
 class ProcessService
 {
 
-    private PostRepositoryInterface $postRepository;
     private UtilsService $utilsService;
 
     public function __construct(
-        PostRepositoryInterface $postRepository,
         UtilsService $utilsService
     ) {
-        $this->postRepository = $postRepository;
         $this->utilsService = $utilsService;
     }
 
-    public function storeApiPosts(array $posts): void
+    public function addRatingToPosts(array $posts): array
     {
-
+        $data = [];
+        
         foreach ($posts as $post) {
-
-            // prepare the data
-            $rating = $this->utilsService->calculatePostRating($post);
             
-            $data = [
+            $rating = $this->utilsService->calculatePostRating($post);
+           
+            $data[] = [
                 'id' => $post['id'],
                 'user_id' => $post['userId'],
                 'title' => $post['title'],
                 'body' => $post['body'],
                 'rating' => $rating,
-            ];
-
-            // insert or update the data
-            $this->postRepository->updateBodyOrInsertData($data);
+            ];   
         }
+
+        return  $data;
+    }
+
+    public function getUsersIdWithPosts($posts): array
+    {
+        $userIds = [];
+
+        foreach ($posts as $post) {
+            if (!in_array($post['userId'], $userIds)) {
+                $userIds[] = $post['userId'];
+            }
+        }
+
+        return $userIds;
     }
 }

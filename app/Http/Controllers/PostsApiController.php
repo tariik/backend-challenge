@@ -30,8 +30,12 @@ class PostsApiController extends Controller
 
     public function inserApiPosts()
     {
-        $apiPosts  =$this->externalApiClient->getPosts(50);
-        $this->processService->storeApiPosts($apiPosts);
+        $apiPosts = $this->externalApiClient->getPosts(50);
+        $posts = $this->processService->addRatingToPosts($apiPosts);
+        
+        foreach ($posts as $post) {
+            $this->postRepository->updateBodyOrInsertData($post);
+        }
 
         try {
             $posts =$this->postRepository->getAllPosts();
@@ -42,7 +46,24 @@ class PostsApiController extends Controller
                 'message'=>$e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
- 
+
+        $apiUsers = $this->externalApiClient->getUsers();
+        $userIds = $this->processService->getUsersIdWithPosts($apiPosts);
+
+        foreach ($apiUsers as $apiUser) {
+            
+            if (in_array($apiUser['id'], $userIds)) {
+                $user = [
+                    'id' => $apiUser['id'],
+                    'name' => $apiUser['name'],
+                    'email' => $apiUser['email'],
+                    'city' => $apiUser['address']['city'],
+                ]; 
+
+                dd($user);
+                $userIds[] = $user['id'];
+            }
+        }
         return response()->json([
             'data' => $posts,
             'message' => 'Succeed'
