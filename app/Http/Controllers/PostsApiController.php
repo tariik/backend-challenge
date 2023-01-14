@@ -31,7 +31,6 @@ class PostsApiController extends Controller
         $this->userRepository = $userRepository;    
     }
 
-
     public function inserApiPosts()
     {
         $apiPosts = $this->externalApiClient->getPosts(50);
@@ -74,4 +73,30 @@ class PostsApiController extends Controller
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
+
+    public function show($id)
+    {
+        try {
+            $post = $this->postRepository->getPostById($id);
+        } 
+        catch (Exception $e) {
+            return response()->json([
+                'data' => [],
+                'message'=> 'Post not found'
+            ], JsonResponse::HTTP_NOT_FOUND);
+        }
+       
+        $postData = [
+            'id' => $post->id,
+            'title' => $post->title,
+            'body' => $post->body,
+            'username' => $post->user->name,
+        ];
+        
+        return response()->json([
+            'data' => $postData,
+            'message' => 'Succeed'
+        ], JsonResponse::HTTP_OK);
+    }
+
 }

@@ -18,4 +18,10 @@ class Post extends Model
         'body',
         'rating'
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

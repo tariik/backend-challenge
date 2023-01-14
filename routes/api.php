@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/get-posts', [PostsApiController::class, 'inserApiPosts']);
+
 Route::group(['prefix'=>'post'], function () {
-    Route::get('/get-posts', [PostsApiController::class, 'inserApiPosts']);
+    Route::get('/{id}', [PostsApiController::class, 'show']);
 });
+
