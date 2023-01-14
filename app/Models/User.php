@@ -15,12 +15,14 @@ class User extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
         'city'
     ];
 
+    public $incrementing = false;
     /*
      * Get the posts for the user.
      */
