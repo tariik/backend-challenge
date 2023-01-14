@@ -12,7 +12,7 @@ use Faker\Factory as Faker;
 
 
 
-class PostTest extends TestCase
+class PostRepositoryTest extends TestCase
 {
 
     use RefreshDatabase, WithFaker;
