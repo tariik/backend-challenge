@@ -1,0 +1,110 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API for JSONPlaceholder",
+        "description": "API for retrieving and displaying data from jsonplaceholder.typicode.com",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/api/get-posts": {
+            "get": {
+                "tags": [
+                    "Migrate posts"
+                ],
+                "summary": "Insert the first 50 posts from the API into the database\r\n     *     and calculate a rating for each post based on the number of words in \r\n     *    the title and body",
+                "operationId": "inserApiPosts",
+                "responses": {
+                    "200": {
+                        "description": "successful operation."
+                    },
+                    "404": {
+                        "description": "Not found."
+                    },
+                    "500": {
+                        "description": "internal server error."
+                    }
+                }
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Get post"
+                ],
+                "summary": "Get a specific post by ID",
+                "operationId": "a8633dcb6070c1a1dd230da3eda59c27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "post id.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get a specific post by ID."
+                    },
+                    "404": {
+                        "description": "Post not found."
+                    },
+                    "default": {
+                        "description": "internal server error."
+                    }
+                }
+            }
+        },
+        "/api/posts/top": {
+            "get": {
+                "tags": [
+                    "Top posts"
+                ],
+                "summary": "Get the best post of each user",
+                "operationId": "9870e97af285da1b02f468dbb66b9535",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get users with their posts ordered by average rating.",
+                "operationId": "093f63c68be4565e279c61cb5630fa88",
+                "responses": {
+                    "200": {
+                        "description": "List of users"
+                    },
+                    "404": {
+                        "description": "Users not found."
+                    },
+                    "500": {
+                        "description": "internal server error."
+                    }
+                }
+            }
+        }
+    }
+}

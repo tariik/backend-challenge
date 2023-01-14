@@ -16,6 +16,25 @@ class UsersApiController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/users",
+     *     tags={"Users"},
+     *     summary="Get users with their posts ordered by average rating.",
+     *     @OA\Response(
+     *          response="200", 
+     *          description="List of users"
+     *      ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Users not found."
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="internal server error."
+     *     )
+     * )
+     */
     public function users()
     {
         $users = [];

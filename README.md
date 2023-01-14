@@ -34,7 +34,7 @@ php artisan serve
 ```
 The application should now be running on `http://localhost:8000`
 
-Running the tests
+## Running the tests
 
 ```sh
 php artisan test
@@ -43,3 +43,9 @@ php artisan test
 Please note that you should use  `api/get-posts`  first to insert posts in the database before testing any other routes..
 
 Note: The database file is located in `storage/database/database.sqlite`.
+
+
+## API documentation and Swagger
+This project includes API documentation and Swagger integration, allowing for easy and intuitive exploration of the available API routes. To view the documentation, visit http://127.0.0.1:8000/api/documentation when the application is running. The documentation includes descriptions of each route and their parameters, as well as example responses.
+
+Please note that yo
