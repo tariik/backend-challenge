@@ -11,4 +11,5 @@ interface UserRepositoryInterface
     public function updateUser($userId, array $newDetails);
     public function exists($userId);
     public function insertIfNotExist(array $userDetails);
+    public function getUsersOrderBYavgRating(); 
 }

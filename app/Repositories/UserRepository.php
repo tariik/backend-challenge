@@ -45,4 +45,26 @@ class UserRepository implements UserRepositoryInterface
             User::create($userDetails);
         }
     }
+
+    public function getUsersOrderBYavgRating() {
+        $users = User::with(
+            [
+               'posts' => function($query) {
+                    $query->select('id', 'user_id', 'body', 'title', 'rating');
+                }
+            ]
+        )
+        ->select('id', 'name', 'email', 'city')
+        ->withCount(
+            [
+                'posts' => function($query) {
+                    $query->select(DB::raw('AVG(rating)'));
+                }
+            ]
+        )
+        ->orderBy('posts_count', 'desc')
+        ->get();
+    
+        return $users;
+    }
 }

@@ -23,7 +23,6 @@ class PostsApiControllerTest extends TestCase
         $this->userRepository = new UserRepository();
     }
 
-    
     public function testShowReturnsCorrectData()
     {
         // Arrange
@@ -53,7 +52,7 @@ class PostsApiControllerTest extends TestCase
         ];
 
         // Act
-        $response = $this->get("/api/post/{$post->id}");
+        $response = $this->get("/api/posts/{$post->id}");
 
         // Assert
         $response->assertStatus(200);
@@ -67,7 +66,7 @@ class PostsApiControllerTest extends TestCase
         $invalidId = 999;
 
         // Act
-        $response = $this->get("/api/post/{$invalidId}");
+        $response = $this->get("/api/posts/{$invalidId}");
 
         // Assert
         $response->assertStatus(404);
@@ -94,7 +93,7 @@ class PostsApiControllerTest extends TestCase
         $this->userRepository->insertIfNotExist($userDetails);
         $this->postRepository->createPost($postData);
 
-        $response = $this->get("api/post/top");
+        $response = $this->get("api/posts/top");
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
