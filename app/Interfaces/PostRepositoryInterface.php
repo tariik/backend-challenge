@@ -12,4 +12,5 @@ interface PostRepositoryInterface
     public function updateBodyOrInsertData(array $postDetails);
     public function getUsersIdsWithPosts();
     public function exists($postId);
+    public function getTopPosts();
 }

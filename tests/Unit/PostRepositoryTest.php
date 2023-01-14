@@ -8,10 +8,6 @@ use App\Repositories\PostRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
-use Faker\Factory as Faker;
-
-
-
 class PostRepositoryTest extends TestCase
 {
 

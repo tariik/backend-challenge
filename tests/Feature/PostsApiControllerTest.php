@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Repositories\UserRepository;
 use App\Repositories\PostRepository;
+use App\Models\Post;
 
 class PostsApiControllerTest extends TestCase
 {
@@ -71,5 +72,42 @@ class PostsApiControllerTest extends TestCase
         // Assert
         $response->assertStatus(404);
         $response->assertJson(['message' => 'Post not found']);
+    }
+
+    public function testTopPostReturnSuccess()
+    {
+          $postData = [
+            'id' => $this->faker->randomNumber(),
+            'title' => $this->faker->sentence,
+            'body' => $this->faker->paragraph,
+            'user_id' => 1,
+            'rating' => $this->faker->randomDigit,
+        ];
+
+        $userDetails = [
+            'id' => 1,
+            'name' => 'John Doe',
+            'email' => 'johndoe@example.com',
+            'city' => 'New York',
+        ];
+
+        $this->userRepository->insertIfNotExist($userDetails);
+        $this->postRepository->createPost($postData);
+
+        $response = $this->get("api/post/top");
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                [
+                    'id',
+                    'title',
+                    'body',
+                    'rating',
+                    'username'
+                ]
+            ],
+            'message'
+        ]);
     }
 }

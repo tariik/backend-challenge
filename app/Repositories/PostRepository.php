@@ -66,4 +66,15 @@ class PostRepository implements PostRepositoryInterface
             );
         }
     }
+
+    public function getTopPosts()
+    {
+        $topPosts = Post::with('user')->orderBy('rating', 'desc')->get()
+            ->groupBy('user_id')
+            ->map(function($posts) {
+                return $posts->first();
+            });
+        
+        return $topPosts;
+    }
 }
