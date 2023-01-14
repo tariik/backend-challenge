@@ -30,6 +30,31 @@ class PostsApiController extends Controller
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @return \Illuminate\Http\Response
+     *
+     * @OA\Get(
+     *     path="/api/get-posts",
+     *     operationId="inserApiPosts",
+     *     tags={"Migrate posts"},
+     *     summary="Insert the first 50 posts from the API into the database
+     *     and calculate a rating for each post based on the number of words in 
+     *    the title and body",
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation."
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found."
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="internal server error."
+     *     )
+     * ) 
+     */
     public function inserApiPosts()
     {
         $apiPosts = $this->externalApiClient->getPosts(50);
@@ -72,6 +97,34 @@ class PostsApiController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
+    /**
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    * @OA\Get(
+    *     path="/api/posts/{id}",
+    *     tags={"Get post"},
+    *     summary="Get a specific post by ID",
+    *     @OA\Parameter(
+    *         in="path",
+    *         name="id",
+    *         required=true,
+    *         @OA\Schema(type="string"),
+    *         @OA\Examples(example="int", value="1", summary="post id.")
+    *     ),
+    *     @OA\Response(
+    *         response=200,
+    *         description="Get a specific post by ID."
+    *     ),
+    *     @OA\Response(
+    *         response=404,
+    *         description="Post not found."
+    *     ),
+    *     @OA\Response(
+    *         response="default",
+    *         description="internal server error."
+    *     )
+    * ) 
+    */
     public function show($id)
     {
         try {
@@ -95,7 +148,15 @@ class PostsApiController extends Controller
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
-
+     /**
+     * @OA\Get(
+     *     path="/api/posts/top",
+     *     tags={"Top posts"},
+     *     summary="Get the best post of each user",
+     *     @OA\Response(response="200", description="Success"),
+     *     @OA\Response(response="404", description="Not Found"),
+     * )
+     */
     public function top()
     {
         $postData = [];

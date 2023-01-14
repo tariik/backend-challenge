@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Repositories\UserRepository;
 use App\Repositories\PostRepository;
-use App\Models\Post;
 
 class PostsApiControllerTest extends TestCase
 {
