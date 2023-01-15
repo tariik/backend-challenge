@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Interfaces\UserRepositoryInterface;
 
-class UsersApiController extends Controller
+class UsersApiController extends ApiController
 {
     private UserRepositoryInterface $userRepository;
 
@@ -17,6 +17,10 @@ class UsersApiController extends Controller
     }
 
     /**
+     * Get all users from the database and order them by their average rating of their posts
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     * 
      * @OA\Get(
      *     path="/api/users",
      *     tags={"Users"},
@@ -39,6 +43,7 @@ class UsersApiController extends Controller
     {
         $users = [];
 
+        // Try to retrieve the users from the database by avg Rating
         try {
             $users = $this->userRepository->getUsersOrderBYavgRating();
         } catch (Exception $e) {
@@ -48,13 +53,11 @@ class UsersApiController extends Controller
             ], JsonResponse::HTTP_NOT_FOUND);
         }
 
+        // Return a JSON response with the retrieved user data and a success message
         return response()->json([
             'data' => $users,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
-
-
-
 }
 

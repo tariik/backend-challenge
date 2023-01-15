@@ -15,7 +15,10 @@ class UsersApiControllerTest extends TestCase
      */
     public function test_users()
     {
+        //Act
         $response = $this->get('/api/users');
+
+        //Assert
         $response->assertStatus(200);       
     }
 }

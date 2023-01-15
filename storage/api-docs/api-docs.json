@@ -19,6 +19,7 @@
                     "Migrate posts"
                 ],
                 "summary": "Insert the first 50 posts from the API into the database\r\n     *     and calculate a rating for each post based on the number of words in \r\n     *    the title and body",
+                "description": "Migrate posts",
                 "operationId": "inserApiPosts",
                 "responses": {
                     "200": {
@@ -39,6 +40,7 @@
                     "Get post"
                 ],
                 "summary": "Get a specific post by ID",
+                "description": "Retrieve a specific post by ID",
                 "operationId": "a8633dcb6070c1a1dd230da3eda59c27",
                 "parameters": [
                     {
@@ -75,6 +77,7 @@
                     "Top posts"
                 ],
                 "summary": "Get the best post of each user",
+                "description": "Get top posts by rating",
                 "operationId": "9870e97af285da1b02f468dbb66b9535",
                 "responses": {
                     "200": {
