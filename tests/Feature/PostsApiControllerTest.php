@@ -74,7 +74,8 @@ class PostsApiControllerTest extends TestCase
 
     public function testTopPostReturnSuccess()
     {
-          $postData = [
+        // Arrange
+        $postData = [
             'id' => $this->faker->randomNumber(),
             'title' => $this->faker->sentence,
             'body' => $this->faker->paragraph,
@@ -89,11 +90,13 @@ class PostsApiControllerTest extends TestCase
             'city' => 'New York',
         ];
 
+        // Act
         $this->userRepository->insertIfNotExist($userDetails);
         $this->postRepository->createPost($postData);
 
         $response = $this->get("api/posts/top");
 
+        // Assert
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [

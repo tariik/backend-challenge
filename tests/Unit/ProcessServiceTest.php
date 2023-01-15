@@ -19,6 +19,7 @@ class ProcessServiceTest extends TestCase
 
     public function testAddRatingToPosts()
     {
+        //Arrange
         $posts = [
             [
                 'id' => 1,
@@ -51,13 +52,16 @@ class ProcessServiceTest extends TestCase
             ],
         ];
 
+        //Act
         $result = $this->processService->addRatingToPosts($posts);
 
+        // Assert
         $this->assertEquals($expected, $result);
     }
 
     public function testGetUsersIdWithPosts()
     {
+         //Arrange
         $posts = [
             [
                 'id' => 1,
@@ -81,6 +85,10 @@ class ProcessServiceTest extends TestCase
 
         $expected = [1, 2];
 
-        $this->assertEquals($expected, $this->processService->getUsersIdWithPosts($posts));
+        //Act
+        $result = $this->processService->getUsersIdWithPosts($posts);
+
+        // Assert
+        $this->assertEquals($expected, $result);
     }
 }

@@ -22,6 +22,7 @@ class UserRepositoryTest extends TestCase
 
     public function test_can_not_insert_if_user_exist()
     {
+        //Arrange
         // Create a new user
         $userDetails = [
             'id' => 1,
@@ -30,9 +31,11 @@ class UserRepositoryTest extends TestCase
             'city' => 'New York',
         ];
 
+        //Act
         // Insert the user into the database
         $this->userRepository->insertIfNotExist($userDetails);
 
+        //Assert
         // Check that the user was inserted into the database
         $this->assertDatabaseHas('users', $userDetails);
 

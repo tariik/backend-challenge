@@ -13,9 +13,13 @@ class ExternalApiClientTest extends TestCase
      */
     public function test_can_get_posts_from_external_api()
     {
+        // Arrange 
         $externalApiClient = new ExternalApiClient();
+
+        // Act
         $posts = $externalApiClient->getPosts(2);
 
+        // Assert
         $this->assertCount(2, $posts);
         $this->assertArrayHasKey('id', $posts[0]);
         $this->assertArrayHasKey('title', $posts[0]);
@@ -28,9 +32,13 @@ class ExternalApiClientTest extends TestCase
      */
     public function test_can_get_users_from_external_api()
     {
+        // Arrange 
         $externalApiClient = new ExternalApiClient();
-        $users = $externalApiClient->getUsers();
 
+        // Act
+        $users = $externalApiClient->getUsers();
+        
+        // Assert
         $this->assertArrayHasKey('id', $users[0]);
         $this->assertArrayHasKey('name', $users[0]);
         $this->assertArrayHasKey('username', $users[0]);
