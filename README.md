@@ -48,4 +48,3 @@ Note: The database file is located in `storage/database/database.sqlite`.
 ## API documentation and Swagger
 This project includes API documentation and Swagger integration, allowing for easy and intuitive exploration of the available API routes. To view the documentation, visit http://127.0.0.1:8000/api/documentation when the application is running. The documentation includes descriptions of each route and their parameters, as well as example responses.
 
-Please note that yo
